@@ -1,0 +1,91 @@
+* Lesson 0!
+
+Welcome to the very first lesson in IMAGEN's smooth introduction to low-level programming in C! This course is going to provide a fun and most importantly _visual_ way to learn low-level programming. We'll introduce the concepts of memory layout, representation, manipulation and then go into more advanced topics about computer systems. The beauty of it, is that we'll learn all this by exploring just one topic. One topic which allows us to explore a whole host of topics not only within computer science, but mathematics as well... and that is _Software Rendering_.
+
+** What is Software Rendering?
+   
+A long long time ago, games were made using "Software Renderers". These were programs which allowed you to draw fancy pictures on the screen. And I don't just mean load an image from the harddrive and display it. I mean have a full-fledged 2D scene (with sprites, boxes, players, enemies) and draw it all on the screen interactively (at least 20 frames per second). The player would be able to move a character, and the software renderer would then regenerate the image into a new one and display it to the screen as the next frame. Now that we have faster CPUs*, we will make sure to do cooler things than just display real-time generated 2D images. No. We will do the whole 3D thing as well ;)
+
+> Yes I said CPUs, we won't be using GPUs for now which would be _Hardware Accelerated Rendering_
+
+** Where to start
+
+Go through the setup guide and using the terminal, go into the `learning/lesson0`.
+
+We will be programming everything in straight C. C is a compiled language. This just means that the beautiful hand-written C code (which us humans understand) will get translated into scary "machine code" which is what the computer understands. We call the compiler the program which does this translation. The name of this compiler may vary depending on which platform you are on. If you are on MacOS/Linux, it will most likely be called gcc or clang and if your on Windows it's probably MSVC. Once the translation process is finished, the compiler creates a new file... a computer program! It's one of those thingies you see in the file explorer that if you double click on it, it starts a beautiful application! (most of the time, this is only the case for GUI applications which we are making yay). On Windows, programs (or executables) often have a ".exe" as a file extension.
+
+> Compilers are just about one of the coolest pieces of software you will ever come across. They are so smart and will optimize your code better than any human could (not in all cases of course). You should check out Matt Godbolt's talk on Compilers from CPP on Sea ([link]). One of the best presentations I've ever heard in my life.
+
+The setup guide will should you how to compile the code. Once it's compiled, go ahead and run it! (Mr. setup guide will help with that too). You should see a beautiful window pop up, with just red!
+
+Ok, but talk is cheap. Let's delve into the code.
+
+** The Code
+   
+Open the `lesson0.c` file.
+
+You will see 2 functions being defined in this file: `setup` and `update`. We won't be using the setup function in this lesson - it will come in the next lesson.
+
+The function we will be concerning ourselves with today is the `update` function. But before we explore this, a quick refresher on C syntax first:
+
+*** Quick C syntax refresher
+
+C is firstly a types language (we like describe things with types as you will see in a second).
+
+**** Functions
+The way we declare functions in C is very simple:
+
+```
+[return type] [function name] ([type of parameter 1] [parameter name], [type of parameter 1] [parameter name], ...) {
+  // Body (by the way, comments in C start with two forward slashes)
+}
+```
+
+Here are some examples.
+
+The function `foo` takes 2 ints (integers - whole numbers) a and b. It returns an int.
+
+```
+int foo(int a, int b) {
+  // Do something
+  return a - b;
+}
+```
+
+The function `bar` returns nothing but takes 3 ints: p, q, and r.
+
+```
+void bar(int p, int q, int r) {
+  // Do something
+}
+
+The function `foobar` returns nothing and takes nothing.
+
+```
+void foobar() {
+  // Do something
+}
+```
+
+**** Variables
+
+....
+
+
+*** New concept (maybe?): POINTERS
+
+Now for something new for maybe most of you: pointers... BUT let's address the issue in reverse. Instead of starting with pointers, let's start with memory.
+
+**** What is memory?
+
+Memory is where all short term storage lives. This is as opposed to hard drive storage which stays coherent even after shutdown.
+
+You can think of memory as the kitchen counter and hard drive storage as the fridge.
+
+In order for me to cut an onion, I need to first take it out of the fridge. Then, I place on the kitchen counter. Then I use my knife to cut it. I keep the sliced onions on the counter, and take out my other ingredients and do the work on them. Once I'm done, I can then store the finished product back in the fridge.
+
+I could theoretically always put the intermediary ingredient forms (sliced onion, tomato sauce, etc...) in the fridge in order to have an empty counter and only take it out when I need it. But that would be insanely inefficient. So many trips back and forth between the fridge to counter.
+
+This is exactly what happens in the computer. It is so much more efficient for the computer (CPU) to process data from memory.
+
+// Example with 2 numbers
