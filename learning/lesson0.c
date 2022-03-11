@@ -4,18 +4,14 @@
   For the lesson0, set every pixel to red (255 for the red, and 0 for the rest)
  */
 
-unsigned char currentG;
-
 void setup() {
   /* 
     Setup code. This is where you may allocate buffer memory, load
     images from files, or any kind of processing which needs to happen
     before the application starts. 
    */
-  currentG = 0;
 }
 
-#ifdef FINAL
 unsigned char *getPixel(unsigned char *pixels, int x, int y, int w) {
   return pixels + (x + y * w) * 4;
 }
@@ -29,7 +25,6 @@ void setPixel(
   pixel[1] = g;
   pixel[2] = b;
 }
-#endif
 
 void update(unsigned char *pixels, int width, int height) {
   /* 
@@ -46,22 +41,10 @@ void update(unsigned char *pixels, int width, int height) {
         left to right
    */
 
-#ifdef FINAL
   for (int y = 0; y < height; ++y) {
     for (int x = 0; x < width; ++x) {
       unsigned char *pixel = getPixel(pixels, x, y, width);
-      setPixel(pixel, 255, currentG, 0);
+      setPixel(pixel, 255, 0, 0);
     }
   }
-
-  currentG = (currentG + 2) % 255;
-#else
-  for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
-      unsigned char *currentPixel = pixels + (x + y * width) * 4;
-
-      *currentPixel = 255;
-    }
-  }
-#endif
 }
