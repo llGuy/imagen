@@ -46,16 +46,17 @@ vec3 kLightPosition = vec3(-3.0f, 3.0f, 0.0f);
 
 vec3 calculateColor(attrib att) {
   vec3 lightDir = normalize(kLightPosition - att.wsPos);
-  float diffuse = clamp(dot(lightDir, att.normal), 0.0f, 1.0f) * 10.0f;
+  float diffuse = clamp(dot(lightDir, att.normal), 0.0f, 1.0f) * 2.0f;
 
   vec3 viewDir = normalize(-att.wsPos);
   vec3 reflectDir = normalize(reflect(-lightDir, att.normal));
 
-  float specular = pow(max(dot(viewDir, reflectDir), 0.0f), 32) * 3.0f;
-  specular = clamp(specular, 0.0f, 1.0f);
+  float specular = pow(max(dot(viewDir, reflectDir), 0.0f), 32) * 10.0f;
+  specular = specular;
   float add = 0.02f + diffuse + specular;
  
   vec3 res = add * att.color;
+  res = clamp(res, vec3(0.0f), vec3(1.0f));
 
   return res;
 }
