@@ -86,5 +86,5 @@ void update(unsigned char *pixels, int width, int height) {
   struct v2 c = {50, 250};
   struct v2 d = {250, 250};
   drawTriangle(pixels, width, a, b, c);
-  drawTriangle(pixels, width, c, b, d);
+  // drawTriangle(pixels, width, c, b, d);
 }
