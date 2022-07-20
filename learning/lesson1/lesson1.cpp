@@ -1,15 +1,27 @@
-#define FINAL
-
 /*
-  For the lesson0, set every pixel to red (255 for the red, and 0 for the rest)
+  For the lesson1, draw a rectangle that moves across the screen
  */
 
-void setup() {
+int width;
+int height;
+
+int positionX;
+int positionY;
+
+const int kSize = 64;
+
+void setup(int w, int h) {
   /* 
     Setup code. This is where you may allocate buffer memory, load
     images from files, or any kind of processing which needs to happen
     before the application starts. 
    */
+
+  positionX = 128;
+  positionY = 128;
+
+  width = w;
+  height = h;
 }
 
 unsigned char *getPixel(unsigned char *pixels, int x, int y, int w) {
@@ -26,7 +38,7 @@ void setPixel(
   pixel[2] = b;
 }
 
-void update(unsigned char *pixels, int width, int height) {
+void update(unsigned char *pixels) {
   /* 
     Update code. This is where you update the actual values of the pixels
     which get displayed onto the window. Pixels are formatted in the following
@@ -41,10 +53,12 @@ void update(unsigned char *pixels, int width, int height) {
         left to right
    */
 
-  for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
-      unsigned char *pixel = getPixel(pixels, x, y, width);
+  for (int y = 0; y < kSize; ++y) {
+    for (int x = 0; x < kSize; ++x) {
+      unsigned char *pixel = getPixel(pixels, x + positionX, y + positionY, width);
       setPixel(pixel, 255, 0, 0);
     }
   }
+
+  positionX = (positionX + 1) % width;
 }
