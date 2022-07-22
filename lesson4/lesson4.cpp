@@ -1,7 +1,6 @@
 // Rotating the triangle in 3D
 
 #include <base.hpp>
-#include <iostream>
 
 void setup() {
 

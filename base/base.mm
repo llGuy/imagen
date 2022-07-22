@@ -7,9 +7,9 @@
 #import <QuartzCore/CAMetalLayer.h>
 
 static void quit(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, GLFW_TRUE);
+  }
 }
 
 extern void setup();
@@ -20,7 +20,7 @@ extern void update(unsigned char *pixels);
 GLFWwindow *window;
 
 int isKeyPressedImpl(int key) {
-    return glfwGetKey(window, key);
+  return glfwGetKey(window, key);
 }
 
 int width;
@@ -33,8 +33,8 @@ int main() {
   swapchain.device = gpu;
   swapchain.opaque = YES;
 
-  width = 256;
-  height = 256;
+  width = 512;
+  height = 512;
 
   setup();
 

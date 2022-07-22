@@ -31,11 +31,11 @@ int main(int argc, char *argv[]) {
 }
 
 void doBoringSetup() {
-  width = 300, height = 300;
+  width = 512, height = 512;
 
   glfwInit();
   window = glfwCreateWindow(
-    300, 300, "Software Rasterizer", NULL, NULL);
+    width, height, "Software Rasterizer", NULL, NULL);
   glfwMakeContextCurrent(window);
 
   pixels = malloc(sizeof(unsigned char) * width * height * 4);
@@ -61,4 +61,8 @@ void render() {
 void doBoringUnsetup() {
   glfwDestroyWindow(window);
   glfwTerminate();
+}
+
+int isKeyPressedImpl(int key) {
+  return glfwGetKey(window, key);
 }

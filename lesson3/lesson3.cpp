@@ -1,5 +1,4 @@
 #include <base.hpp>
-#include <iostream>
 
 void setup() {
 
