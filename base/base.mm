@@ -210,7 +210,5 @@ int main() {
   glfwDestroyWindow(window);
   glfwTerminate();
 
-  printf("%f\n", fps);
-
   return 0;
 }
