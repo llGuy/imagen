@@ -12,7 +12,7 @@ static void quit(GLFWwindow *window, int key, int scancode, int action, int mods
     }
 }
 
-extern void setup(int width, int height);
+extern void setup();
 extern void update(unsigned char *pixels);
 
 #define MAX_FRAMES_IN_FLIGHT 3
@@ -23,6 +23,9 @@ int isKeyPressedImpl(int key) {
     return glfwGetKey(window, key);
 }
 
+int width;
+int height;
+
 int main() {
   const id<MTLDevice> gpu = MTLCreateSystemDefaultDevice();
   const id<MTLCommandQueue> queue = [gpu newCommandQueue];
@@ -30,10 +33,10 @@ int main() {
   swapchain.device = gpu;
   swapchain.opaque = YES;
 
-  int width = 256;
-  int height = 256;
+  width = 256;
+  height = 256;
 
-  setup(width, height);
+  setup();
 
   glfwInit();
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);

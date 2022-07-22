@@ -9,6 +9,9 @@
 
 #include <GLFW/glfw3.h>
 
+extern int width;
+extern int height;
+
 using namespace glm;
 
 // Makes it so that typing "u8" is just like typing "unsigned char"

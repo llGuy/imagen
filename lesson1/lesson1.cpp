@@ -1,11 +1,7 @@
 #include <base.hpp>
 
-int width;
-int height;
+void setup() {
 
-void setup(int w, int h) {
-  width = w;
-  height = h;
 }
 
 unsigned char *getPixel(unsigned char *pixels, int x, int y) {

@@ -1,19 +1,13 @@
 #include <base.hpp>
 
-int width;
-int height;
-
 int positionX;
 int positionY;
 
 const int kSize = 64;
 
-void setup(int w, int h) {
+void setup() {
   positionX = 128;
   positionY = 128;
-
-  width = w;
-  height = h;
 }
 
 unsigned char *getPixel(unsigned char *pixels, int x, int y, int w) {

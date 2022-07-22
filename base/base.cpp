@@ -1,11 +1,11 @@
-#include "base.hpp"
+#include <base.hpp>
 
 #include <string.h>
 #include <stdlib.h>
 #include <GLFW/glfw3.h>
 
 static GLFWwindow *window;
-static int width, height;
+int width, height;
 static void *pixels;
 
 void     doBoringSetup();
@@ -13,13 +13,13 @@ bool32_t isWindowOpen();
 void     render();
 void     doBoringUnsetup();
 
-extern void setup(int width, int height);
+extern void setup();
 extern void update(unsigned char *pixels);
 
 int main(int argc, char *argv[]) {
   doBoringSetup();
 
-  setup(width, height);
+  setup();
 
   while (isWindowOpen()) {
     render();

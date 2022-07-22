@@ -1,21 +1,15 @@
-#include "base.hpp"
+#include <base.hpp>
 
 /*
   For the lesson0, set every pixel to red (255 for the red, and 0 for the rest)
  */
 
-int width;
-int height;
-
-void setup(int w, int h) {
+void setup() {
   /*
     Setup code. This is where you may allocate buffer memory, load
     images from files, or any kind of processing which needs to happen
     before the application starts.
    */
-
-  width = w;
-  height = h;
 }
 
 unsigned char *getPixel(unsigned char *pixels, int x, int y, int w) {

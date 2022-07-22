@@ -1,11 +1,8 @@
 #include <base.hpp>
+#include <iostream>
 
-int width;
-int height;
+void setup() {
 
-void setup(int w, int h) {
-  width = w;
-  height = h;
 }
 
 struct attribute {
@@ -26,12 +23,27 @@ void setPixel(
   pixel[2] = b;
 }
 
-void drawTriangle(unsigned char *pixels, vec2 *verts, attribute *attribs) {
-  vec2 lower = min(verts[0], min(verts[1], verts[2]));
-  vec2 upper = max(verts[0], max(verts[1], verts[2]));
+vec2 convertFromClipToPixel(vec2 ndc) {
+  return vec2(width, height) * (ndc / 2.0f + vec2(0.5f));
+}
 
-  vec2 u = verts[1] - verts[0];
-  vec2 v = verts[2] - verts[0];
+void drawTriangle(unsigned char *pixels, vec2 *clipVerts, attribute *attribs) {
+  // Convert to pixel coordinates
+  vec2 pixelVerts[3] = {
+    convertFromClipToPixel(clipVerts[0]),
+    convertFromClipToPixel(clipVerts[1]),
+    convertFromClipToPixel(clipVerts[2])
+  };
+
+  vec2 lower = min(pixelVerts[0], min(pixelVerts[1], pixelVerts[2]));
+  vec2 upper = max(pixelVerts[0], max(pixelVerts[1], pixelVerts[2]));
+
+  // Make sure to clamp these to the min/max of the window itself
+  lower = clamp(lower, vec2(0), vec2(width, height));
+  upper = clamp(upper, vec2(0), vec2(width, height));
+
+  vec2 u = pixelVerts[1] - pixelVerts[0];
+  vec2 v = pixelVerts[2] - pixelVerts[0];
 
   vec2 w1 = u;
   vec2 w2 = v - proj(v, u);
@@ -40,7 +52,7 @@ void drawTriangle(unsigned char *pixels, vec2 *verts, attribute *attribs) {
     for (int x = lower.x; x < upper.x; ++x) {
 
       vec2 point = vec2(x, y);
-      vec2 delta = point - verts[0];
+      vec2 delta = point - pixelVerts[0];
 
       float gamma = dot(delta, w2) / dot(w2, w2);
       float beta = ( dot(delta, w1) / dot(w1, w1) ) - ( dot(delta, w2) / dot(w2, w2) ) * ( dot(u, v) / dot(u, u) );
@@ -61,9 +73,9 @@ void drawTriangle(unsigned char *pixels, vec2 *verts, attribute *attribs) {
 
 void update(unsigned char *pixels) {
   vec2 verts[] = {
-    vec2(32, 32),
-    vec2(width/2, height-32),
-    vec2(width-32, 32)
+    vec2(-0.5f, -0.5f),
+    vec2(0.0f, 0.5f),
+    vec2(0.5f, -0.5f)
   };
 
   attribute attribs[] = {
