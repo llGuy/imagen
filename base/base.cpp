@@ -7,6 +7,9 @@
 static GLFWwindow *window;
 int width, height;
 static void *pixels;
+vec2 mouseDelta;
+vec2 previous;
+bool fpsMode = false;
 
 void     doBoringSetup();
 bool32_t isWindowOpen();
@@ -15,6 +18,21 @@ void     doBoringUnsetup();
 
 extern void setup();
 extern void update(unsigned char *pixels);
+
+vec2 mouseMovement() {
+  return mouseDelta;
+}
+
+void toggleFPSMode() {
+  fpsMode ^= 1;
+
+  if (fpsMode) {
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  }
+  else {
+     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  }
+}
 
 int main(int argc, char *argv[]) {
   doBoringSetup();
@@ -39,6 +57,8 @@ void doBoringSetup() {
   glfwMakeContextCurrent(window);
 
   pixels = malloc(sizeof(unsigned char) * width * height * 4);
+
+  previous = getMousePos();
 }
 
 bool32_t isWindowOpen() {
@@ -47,6 +67,13 @@ bool32_t isWindowOpen() {
 
 void render() {
   glfwPollEvents();
+
+  vec2 current = getMousePos();
+
+  mouseDelta = current - previous;
+  mouseDelta.y *= -1.0f;
+  previous = current;
+
   glClear(GL_COLOR_BUFFER_BIT);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 

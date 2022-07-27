@@ -1,10 +1,27 @@
-// Rotating the triangle in 3D
+/*
+** Here, we do the implementation of the 3D explanation from
+** the previous lesson. Quite a lot of implementation.
+** Need to add uniform data interface,
+** Need to create transform functions (per triangle + vertex)
+*/
 
 #include <base.hpp>
 
-void setup() {
+float angle;
 
+void setup() {
+  angle = 0.0f;
 }
+
+struct uniform {
+  // Projection data
+  float nearPlane;
+
+  // Transformation data
+  float scale;
+  mat3 rotation;
+  vec3 translation;
+};
 
 struct attribute {
   vec3 color;
@@ -72,11 +89,32 @@ void drawTriangle(unsigned char *pixels, vec2 *clipVerts, attribute *attribs) {
   }
 }
 
+vec3 transformVertex(vec3 vert, uniform *uniformData) {
+  vert = uniformData->scale * (uniformData->rotation * vert) + uniformData->translation;
+
+  vert.x *= uniformData->nearPlane / (vert.z * 0.57f);
+  vert.y *= uniformData->nearPlane / (vert.z * 0.57f);
+
+  return vert;
+}
+
+void transformAndDrawTriangle(
+  unsigned char *pixels, vec3 *verts, attribute *attribs,
+  uniform *uniformData) {
+  vec2 transformed[3] = {
+    vec2(transformVertex(verts[0], uniformData)),
+    vec2(transformVertex(verts[1], uniformData)),
+    vec2(transformVertex(verts[2], uniformData))
+  };
+
+  drawTriangle(pixels, transformed, attribs);
+}
+
 void update(unsigned char *pixels) {
-  vec2 verts[] = {
-    vec2(-0.5f, -0.5f),
-    vec2(0.0f, 0.5f),
-    vec2(0.5f, -0.5f)
+  vec3 verts[] = {
+    vec3(-0.5f, -0.5f, 0.0f),
+    vec3(0.0f, 0.5f, 0.0f),
+    vec3(0.5f, -0.5f, 0.0f)
   };
 
   attribute attribs[] = {
@@ -85,5 +123,14 @@ void update(unsigned char *pixels) {
     { vec3(0, 0, 255) }
   };
 
-  drawTriangle(pixels, verts, attribs);
+  uniform uniformData = {
+    1.0f,
+    1.0f,
+    rotate(radians(angle), vec3(0.0f, 1.0f, 0.0f)),
+    vec3(0.0f, 0.0f, 2.0f)
+  };
+
+  transformAndDrawTriangle(pixels, verts, attribs, &uniformData);
+
+  angle += 1.0f;
 }

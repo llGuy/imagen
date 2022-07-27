@@ -1,3 +1,8 @@
+/*
+** Here, we define our coordinate system (-1 -> +1) in all
+** directions and explain the theory behind 3D
+*/
+
 #include <base.hpp>
 
 void setup() {

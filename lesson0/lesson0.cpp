@@ -1,3 +1,10 @@
+/*
+** Here, we learn to use this development environment,
+** Color the entire window in red,
+** Change that to a rectangle
+** Add some interactivity (with the state we create in setup())
+*/
+
 #include <base.hpp>
 
 int positionX;

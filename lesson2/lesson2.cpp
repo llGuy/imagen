@@ -1,3 +1,8 @@
+/*
+** Here, we add attributes to each pixel and
+** add interpolation between the attributes (rainbow triangle)
+*/
+
 #include <base.hpp>
 
 void setup() {

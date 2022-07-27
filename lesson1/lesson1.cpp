@@ -1,3 +1,11 @@
+/*
+** Here, we learn to draw a triangle.
+** We find the min and max of the triangle boundary,
+** Iterate over all pixels in that rectangle
+** Use a simple barycentric coordinate test to see
+** whether the pixels are inside the triangle or not
+*/
+
 #include <base.hpp>
 
 void setup() {

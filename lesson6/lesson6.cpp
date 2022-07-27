@@ -1,6 +1,5 @@
 /*
-** Here, we need to add depth. We need to allocate a buffer
-** which is going to hold depth information per pixel.
+** Here, we are going to add camera movement
 */
 
 #include <base.hpp>
@@ -10,10 +9,64 @@ float maxDepth;
 
 float *depthBuffer;
 
+struct eye {
+  vec3 pos;
+  vec3 dir;
+  vec3 up;
+
+  mat3 rot;
+};
+
+eye eyeData;
+
+void updateEye() {
+  const float speed = 0.1f;
+  const float cursorSpeed = 0.5f;
+
+  vec3 right = cross(eyeData.dir, eyeData.up);
+
+  // Movement
+  if (isKeyPressed(W)) {
+	eyeData.pos += eyeData.dir * speed;
+  }
+  if (isKeyPressed(A)) {
+	eyeData.pos -= right * speed;
+  }
+  if (isKeyPressed(S)) {
+	eyeData.pos -= eyeData.dir * speed;
+  }
+  if (isKeyPressed(D)) {
+	eyeData.pos += right * speed;
+  }
+  if (isKeyPressed(SPACE)) {
+	eyeData.pos += eyeData.up * speed;
+  }
+  if (isKeyPressed(LEFT_SHIFT)) {
+	eyeData.pos -= eyeData.up * speed;
+  }
+
+  // View movement
+  vec2 viewDiff = mouseMovement() * cursorSpeed;
+  eyeData.dir = mat3(rotate(radians(-viewDiff.x), eyeData.up)) * eyeData.dir;
+  eyeData.dir = mat3(rotate(radians(-viewDiff.y), right)) * eyeData.dir;
+
+  eyeData.dir = normalize(eyeData.dir);
+
+  right = normalize(cross(eyeData.dir, eyeData.up));
+  vec3 orthoUp = normalize(cross(right, eyeData.dir));
+  eyeData.rot = mat3(right, orthoUp, eyeData.dir);
+}
+
 void setup() {
   angle = 0.0f;
 
   depthBuffer = (float *)malloc(sizeof(float) * width * height);
+
+  eyeData.pos = vec3(0.0f);
+  eyeData.dir = vec3(0.0f, 0.0f, 1.0f);
+  eyeData.up = vec3(0.0f, 1.0f, 0.0f);
+
+  toggleFPSMode();
 }
 
 struct uniform {
@@ -106,6 +159,9 @@ void drawTriangle(unsigned char *pixels, vec2 *clipVerts, float *depth, attribut
 vec3 transformVertex(vec3 vert, uniform *uniformData) {
   vert = uniformData->scale * (uniformData->rotation * vert) + uniformData->translation;
 
+  // Transform given eye information
+  vert = eyeData.rot * (vert - eyeData.pos);
+
   vert.x *= uniformData->nearPlane / (vert.z * 0.57f);
   vert.y *= uniformData->nearPlane / (vert.z * 0.57f);
 
@@ -131,6 +187,8 @@ void transformAndDrawTriangle(
 }
 
 void update(unsigned char *pixels) {
+  updateEye();
+
   memset(depthBuffer, 0, sizeof(float) * width * height);
 
   vec3 verts[] = {

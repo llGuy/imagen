@@ -5,6 +5,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <glm/gtx/projection.hpp>
 
 #include <GLFW/glfw3.h>
@@ -20,10 +21,19 @@ typedef unsigned short u16;
 typedef unsigned int   u32;
 typedef unsigned int   bool32_t;
 
+vec2 mouseMovement();
+
 int isKeyPressedImpl(int key);
 #define isKeyPressed(key) isKeyPressedImpl(GLFW_KEY_##key)
 
+#if !defined(MIN)
 #define MIN(a, b) ((a < b) ? (a) : (b))
+#endif
+
+#if !defined(MAX)
 #define MAX(a, b) ((a > b) ? (a) : (b))
+#endif
+
+void toggleFPSMode();
 
 #endif

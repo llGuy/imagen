@@ -6,6 +6,8 @@
 #import <Metal/Metal.h>
 #import <QuartzCore/CAMetalLayer.h>
 
+#include <base.hpp>
+
 static void quit(GLFWwindow *window, int key, int scancode, int action, int mods) {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -18,13 +20,37 @@ extern void update(unsigned char *pixels);
 #define MAX_FRAMES_IN_FLIGHT 3
 
 GLFWwindow *window;
+vec2 mouseDelta;
+
+bool fpsMode = 0;
 
 int isKeyPressedImpl(int key) {
   return glfwGetKey(window, key);
 }
 
+vec2 mouseMovement() {
+  return mouseDelta;
+}
+
 int width;
 int height;
+
+vec2 getMousePos() {
+  double x, y;
+  glfwGetCursorPos(window, &x, &y);
+  return vec2((float)x, (float)y);
+}
+
+void toggleFPSMode() {
+  fpsMode ^= 1;
+
+  if (fpsMode) {
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  }
+  else {
+     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  }
+}
 
 int main() {
   const id<MTLDevice> gpu = MTLCreateSystemDefaultDevice();
@@ -35,8 +61,6 @@ int main() {
 
   width = 512;
   height = 512;
-
-  setup();
 
   glfwInit();
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -155,13 +179,23 @@ int main() {
     }
   }
 
+  setup();
+
   MTLClearColor color = MTLClearColorMake(0, 0, 0, 1);
 
   float time = glfwGetTime();
   float fps = 0.0f;
 
+  vec2 previous = getMousePos();
+
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
+
+    vec2 current = getMousePos();
+
+    mouseDelta = current - previous;
+    mouseDelta.y *= -1.0f;
+    previous = current;
 
     frame = (frame + 1) % MAX_FRAMES_IN_FLIGHT;
 
