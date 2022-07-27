@@ -119,13 +119,9 @@ void transformAndDrawTriangle(
   vec3 b = transformVertex(verts[1], uniformData);
   vec3 c = transformVertex(verts[2], uniformData);
 
-  vec2 transformed[3] = {
-    vec2(a), vec2(b), vec2(c)
-  };
+  vec2 transformed[3] = {vec2(a), vec2(b), vec2(c)};
 
-  float depth[3] = {
-    a.z, b.z, c.z
-  };
+  float depth[3] = {a.z, b.z, c.z};
 
   drawTriangle(pixels, transformed, depth, attribs);
 }
@@ -147,11 +143,11 @@ void update(unsigned char *pixels) {
     };
 
     uniform uniformDataA = {
-    1.0f,
-    1.0f,
-    rotate(radians(angle), vec3(0.0f, 1.0f, 0.0f)),
-    vec3(0.0f, 0.0f, 2.0f)
-  };
+      1.0f,
+      1.0f,
+      rotate(radians(angle), vec3(0.0f, 1.0f, 0.0f)),
+      vec3(0.0f, 0.0f, 2.0f)
+    };
 
     transformAndDrawTriangle(pixels, verts, attribs, &uniformDataA);
   }
