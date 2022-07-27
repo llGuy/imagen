@@ -48,6 +48,7 @@ void updateEye() {
   // View movement
   vec2 viewDiff = mouseMovement() * cursorSpeed;
   eyeData.dir = mat3(rotate(radians(-viewDiff.x), eyeData.up)) * eyeData.dir;
+  right = normalize(cross(eyeData.dir, eyeData.up));
   eyeData.dir = mat3(rotate(radians(-viewDiff.y), right)) * eyeData.dir;
 
   eyeData.dir = normalize(eyeData.dir);
