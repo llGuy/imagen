@@ -62,7 +62,7 @@ to edit the code for a lesson, uncollapse the lesson you want to modify, double 
 
 ### Linux (Same as MacOS)
 
-Do setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+To setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
 
 ``` sh
 mkdir build
