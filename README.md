@@ -2,6 +2,10 @@
 
 ## Installation
 
+``` sh
+git submodule update —init  —recursive
+```
+
 ### Mac OS 
 
 - Install XCode
@@ -23,7 +27,7 @@ For CMake, if you have homebrew setup, you can just run `brew install cmake`. If
 
 ### Mac OS 
 
-Do setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+To setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
 
 ``` sh
 mkdir build
@@ -40,6 +44,14 @@ To edit the code for a lesson, just open the `.cpp` file contained in the lesson
 
 ### Windows
 
+To setup the project, run the following command (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+
+``` sh
+mkdir build
+cd build 
+cmake -DCMAKE_BUILD_TYPE=DEBUG ..
+```
+
 Inside the build folder, you will find `imagen.sln` file. Double click on it in your file explorer.
 
 On the `Solution Explorer` which is a window on either the left or the right of the Visual Studio application. If you uncollapse the `imagen` solution (might already be uncollapsed), right click on the lesson you want to compile or run. Select `Set as Startup Project`. Then press `Control`, `Shift` and `B` at the same time to compile the lesson. To run the lesson, press `Control` and `F5` at the same time. You should see a window appear with whatever cool graphics you are drawing into it!
@@ -48,7 +60,7 @@ to edit the code for a lesson, uncollapse the lesson you want to modify, double 
 
 ### Linux (Same as MacOS)
 
-Do setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+To setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
 
 ``` sh
 mkdir build
