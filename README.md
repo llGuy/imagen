@@ -2,6 +2,12 @@
 
 ## Installation
 
+Before following any of the following instructions, run the following command:
+
+``` sh
+git submodule update —init  —recursive
+```
+
 ### Mac OS 
 
 - Install XCode
@@ -23,7 +29,7 @@ For CMake, if you have homebrew setup, you can just run `brew install cmake`. If
 
 ### Mac OS 
 
-Do setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+To setup the project, run the following commands (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
 
 ``` sh
 mkdir build
@@ -39,6 +45,14 @@ To run the code for a particular lesson (for instance, lesson2), `cd` into the b
 To edit the code for a lesson, just open the `.cpp` file contained in the lesson's directory with your favorite text editor and code away! You can then compile and run.
 
 ### Windows
+
+To setup the project, run the following command (assuming that your current working directory starts from the root of the project: `~/This/That/Other/imagen/`):
+
+``` sh
+mkdir build
+cd build 
+cmake -DCMAKE_BUILD_TYPE=DEBUG ..
+```
 
 Inside the build folder, you will find `imagen.sln` file. Double click on it in your file explorer.
 
