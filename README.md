@@ -2,6 +2,8 @@
 
 ## Installation
 
+Before following any of the following instructions, run the following command:
+
 ``` sh
 git submodule update —init  —recursive
 ```
